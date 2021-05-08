@@ -135,11 +135,11 @@ n_h5 = 256
 n_out = 1
 # n_out = 
 
-model = ANN_Regression(n_in, n_h, n_h2, n_h3, n_h4, n_out)
+model = ANN_Regression(n_in, n_h, n_h2, n_h3, n_h4, n_h5, n_out)
 
 # model = ANN_classification(n_in, n_h, n_out)
 
-history = model.fit(x_train, y_train, epochs=7000,
+history = model.fit(x_train, y_train, epochs=1000,
                     batch_size=500, validation_split=0.2,
                     verbose=1)
 
