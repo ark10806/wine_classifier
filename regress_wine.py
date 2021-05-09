@@ -61,12 +61,17 @@ class ANN_Regression(models.Model):
         output = layers.Dense(n_out)
         relu = layers.Activation('relu')
         sigmoid = layers.Activation('sigmoid')
+        dropout_4 = layers.Dropout(0.48)
+        dropout_2 = layers.Dropout(0.2)
 
         x = layers.Input(shape=(n_in,))
         h = relu(hidden(x))
+        h = dropout_4(h)
         h = relu(hidden2(h))
-        h = relu(hidden3(h))
+        h = relu(hidden3(h)) 
+        h = dropout_2(h)
         h = relu(hidden4(h))
+        h = dropout_4(h)
         h = hidden5(h)
         y = output(h)
 
@@ -80,11 +85,19 @@ class ANN_Regression(models.Model):
 
 
 n_in = 11
-n_h = 1024
-n_h2 = 2048
-n_h3 = 4096
-n_h4 = 2048
-n_h5 = 1024
+n_h = 16
+n_h2 = 32
+n_h3 = 32
+n_h4 = 32
+n_h5 = 16
+n_out = 1
+
+n_in = 11
+n_h = 212
+n_h2 = 128
+n_h3 = 64
+n_h4 = 128
+n_h5 = 256
 n_out = 1
 
 model = ANN_Regression(n_in, n_h, n_h2, n_h3, n_h4, n_h5, n_out)
