@@ -52,12 +52,12 @@ def normalize(total_data: np.array) -> None:
 x_train, y_train, x_test, y_test = generate_data(white_wine, 0.7)
 
 class ANN_Regression(models.Model):
-    def __init__(self, n_in, n_h, n_h2, n_h3, n_h4, n_h5, n_out):
-        hidden = layers.Dense(n_h)
-        hidden2 = layers.Dense(n_h2)
-        hidden3 = layers.Dense(n_h3)
-        hidden4 = layers.Dense(n_h4)
-        hidden5 = layers.Dense(n_h5)
+    def __init__(self, n_in, n_out):
+        hidden = layers.Dense(212)
+        hidden2 = layers.Dense(128)
+        hidden3 = layers.Dense(64)
+        hidden4 = layers.Dense(128)
+        hidden5 = layers.Dense(256)
         output = layers.Dense(n_out)
         relu = layers.Activation('relu')
         sigmoid = layers.Activation('sigmoid')
@@ -82,14 +82,8 @@ class ANN_Regression(models.Model):
                     metrics=['accuracy'])
 
 n_in = 11
-n_h = 212
-n_h2 = 128
-n_h3 = 64
-n_h4 = 128
-n_h5 = 256
 n_out = 1
-
-model = ANN_Regression(n_in, n_h, n_h2, n_h3, n_h4, n_h5, n_out)
+model = ANN_Regression(n_in, n_out)
 
 history = model.fit(x_train, y_train, epochs=1000,
                     batch_size=500, validation_split=0.2,
