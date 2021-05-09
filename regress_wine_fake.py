@@ -47,7 +47,7 @@ def generate_data(df: pd.DataFrame, t_r: float):
 def normalize(total_data: np.array) -> None:
     for i in range(np.shape(total_data)[1]-1):
         col_zero_base = total_data[:,i] - total_data[:,i].min()
-        total_data[:,i] = ( col_zero_base ) / ( col_zero_base.max() ) * 5
+        total_data[:,i] = ( col_zero_base ) / ( col_zero_base.max() )
 
 x_train, y_train, x_test, y_test = generate_data(white_wine, 0.7)
 
@@ -61,37 +61,44 @@ class ANN_Regression(models.Model):
         output = layers.Dense(n_out)
         relu = layers.Activation('relu')
         sigmoid = layers.Activation('sigmoid')
-        dropout_4 = layers.Dropout(0.48)
-        dropout_2 = layers.Dropout(0.2)
 
         x = layers.Input(shape=(n_in,))
         h = relu(hidden(x))
-        h = dropout_4(h)
         h = relu(hidden2(h))
-        h = relu(hidden3(h)) 
-        h = dropout_2(h)
-        h = relu(hidden4(h))
-        h = dropout_4(h)
+        h = sigmoid(hidden3(h))
+        h = sigmoid(hidden4(h))
         h = hidden5(h)
         y = output(h)
 
-        adam = optimizers.Adam(lr=0.003, beta_1=0.8)
+
         super().__init__(x, y)
+
         self.compile(loss='logcosh', 
-                    optimizer=adam,
+                    optimizer='adam',
                     metrics=['accuracy'])
 
+
 n_in = 11
-n_h = 212
-n_h2 = 128
-n_h3 = 64
-n_h4 = 128
-n_h5 = 256
+n_h = 1024
+n_h2 = 2048
+n_h3 = 512
+n_h4 = 512
+n_h5 = 512
 n_out = 1
+
+# n_in = 11
+# n_h = 212
+# n_h2 = 128
+# n_h3 = 64
+# n_h4 = 128
+# n_h5 = 256
+# n_out = 1
 
 model = ANN_Regression(n_in, n_h, n_h2, n_h3, n_h4, n_h5, n_out)
 
-history = model.fit(x_train, y_train, epochs=1000,
+# model = ANN_classification(n_in, n_h, n_out)
+
+history = model.fit(x_train, y_train, epochs=500,
                     batch_size=500, validation_split=0.2,
                     verbose=1)
 
